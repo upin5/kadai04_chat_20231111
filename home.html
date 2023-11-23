@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="home.css">
+<title>HOME</title>
+
+
+</head>
+<header></header>
+<body>
+ <div>
+    <h2>以下の設問に対してお答えください</h2>
+    <div id="quest_1" class="questgroup">
+      <p class="middleNo">設問１</p>
+      <p class="smalltxt">あなたが得意だと思うことを以下に書いてください</p>
+      <div id="ans_1" class="textarea-container">
+            <textarea id="ans_1_1" class="textarea" rows="4" cols="50"></textarea>
+            <textarea id="ans_1_2" class="textarea" rows="4" cols="50"></textarea>
+            <textarea id="ans_1_3" class="textarea" rows="4" cols="50"></textarea>
+
+      </div>
+    </div>
+
+    <div id="quest_2" class="questgroup">
+        <p class="middleNo">設問２</p>
+        <p class="smalltxt">あなたが苦手だと思うことを以下に書いてください</p>
+        <div id="ans_2" class="textarea-container">
+            <textarea id="ans_2_1" class="textarea" rows="4" cols="50"></textarea>
+            <textarea id="ans_2_2" class="textarea" rows="4" cols="50"></textarea>
+            <textarea id="ans_2_3" class="textarea" rows="4" cols="50"></textarea>
+        </div>
+    </div>
+
+    <div id="quest_3" class="questgroup">
+        <p class="middleNo">設問３</p>
+        <p class="smalltxt">あなたが今後頑張りたいものを教えてください</p>
+        <div id="ans_3" class="textarea-container">
+            <textarea id="ans_3_1" class="textarea" rows="4" cols="50"></textarea>
+            <textarea id="ans_3_2" class="textarea" rows="4" cols="50"></textarea>
+            <textarea id="ans_3_3" class="textarea" rows="4" cols="50"></textarea>
+        </div>
+    </div>
+
+    <div id="quest_4" class="questgroup">
+        <p class="middleNo">設問４</p>
+        <p class="smalltxt">あなた自身の嫌いなところ、直したい部分を教えてください</p>
+        <div id="ans_4" class="textarea-container">
+            <textarea id="ans_4_1" class="textarea" rows="4" cols="50"></textarea>
+            <textarea id="ans_4_2" class="textarea" rows="4" cols="50"></textarea>
+            <textarea id="ans_4_3" class="textarea" rows="4" cols="50"></textarea>
+        </div>
+    </div>
+    <div>
+    <p>「１登録」を押してから、「２結果表示」を押してください</p>
+    <button id="bt_send">１登録</button>
+    <button id="bt_result">２結果表示</button>
+    </div>
+
+    <div class="container">
+    <div class="text_box">【Your Strong Point】</div>
+    <div class="text_box">【Your Weak Point】</div> 
+    </div>
+
+    <div id="up">
+    <div id="strong" class="result" style="overflow: auto; height: 300px;">
+        <!-- <textarea id="answer_1" class="result_text"></textarea>
+
+        <textarea id="answer_2" class="result_text"></textarea> --></div>
+    <div id="weak" class="result" style="overflow: auto; height: 300px;"></div>
+   
+    <!-- <div id="opo_threat" class="result"> -->
+        <!-- <textarea id="answer_3" class="result_text"></textarea> -->
+        <!-- <textarea id="answer_4" class="result_text"></textarea> -->
+    </div>
+    <div id="down">
+    <div id="opo" class="result" style="overflow: auto; height:300px;"></div>
+    <div id="threat" class="result" style="overflow: auto; height:300px;"></div>
+    </div>
+    <div class="container">
+        <div class="text_box">【Your Opportunity Point】</div>
+        <div class="text_box">【Your Threat Point】</div> 
+        </div>
+
+ </main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- JQuery -->
+<!-- <script type="text/javascript" src="apikey.js"></script> -->
+
+<!--** 以下Firebase **-->
+<script type="module">
+   
+    import { initializeApp, } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved,child } 
+    from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";  
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,signOut } 
+    from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+  
+   
+   
+    const firebaseConfig = {
+      apiKey: "",
+      authDomain: "kadai-e42aa.firebaseapp.com",
+      projectId: "kadai-e42aa",
+      storageBucket: "kadai-e42aa.appspot.com",
+      messagingSenderId: "557897220147",
+      appId: "1:557897220147:web:02aed362143e05fa44a346"
+      
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const dbRef = ref(db,"ans1");
+
+    $("#bt_send").on("click",function(){
+        const msg = {
+            ans1_1 : $("#ans_1_1").val(), 
+            ans1_2 : $("#ans_1_2").val(),
+            ans1_3 : $("#ans_1_3").val()
+        }
+        const newPostRef = push(dbRef); 
+        set(newPostRef,msg);
+    });
+
+    const dbRef_2 = ref(db,"ans2");
+
+    $("#bt_send").on("click",function(){
+        const msg = {
+            ans2_1 : $("#ans_2_1").val(), 
+            ans2_2 : $("#ans_2_2").val(),
+            ans2_3 : $("#ans_2_3").val()
+        }
+        const newPostRef = push(dbRef_2); 
+        set(newPostRef,msg);
+    });
+
+    const dbRef_3 = ref(db,"ans3");
+
+$("#bt_send").on("click",function(){
+    const msg = {
+        ans3_1 : $("#ans_3_1").val(), 
+        ans3_2 : $("#ans_3_2").val(),
+        ans3_3 : $("#ans_3_3").val()
+    }
+    const newPostRef = push(dbRef_3); //ユニークキー生成
+    set(newPostRef,msg);
+});
+
+const dbRef_4 = ref(db,"ans4");
+$("#bt_send").on("click",function(){
+    const msg = {
+        ans4_1 : $("#ans_4_1").val(), 
+        ans4_2 : $("#ans_4_2").val(),
+        ans4_3 : $("#ans_4_3").val()
+    }
+    const newPostRef = push(dbRef_4); //ユニークキー生成
+    set(newPostRef,msg);
+
+});
+
+$("#bt_result").on("click",function () { 
+
+    onChildAdded(dbRef,function(data){
+        const msg_1 = data.val();
+        const key = data.key;
+        let h_1 ='<p>';
+            h_1 += msg_1.ans1_1;
+            h_1 +='<br>';
+            h_1 += msg_1.ans1_2;
+            h_1 += '<br>';
+            h_1 += msg_1.ans1_3;
+            h_1 += '</p>'
+            $('#strong').append(h_1);
+             
+        });
+  
+        onChildAdded(dbRef_2,function(data){
+        const msg_2 = data.val();
+        const key = data.key;
+        let h_2 ='<p>';
+            h_2 += msg_2.ans2_1;
+            h_2 +='<br>';
+            h_2 += msg_2.ans2_2;
+            h_2 += '<br>';
+            h_2 += msg_2.ans2_3;
+            h_2 += '</p>'
+            $('#weak').append(h_2);  
+
+        });
+  
+        onChildAdded(dbRef_3,function(data){
+        const msg_3 = data.val();
+        const key = data.key;
+        let h_3 ='<p>';
+            h_3 += msg_3.ans3_1;
+            h_3 +='<br>';
+            h_3 += msg_3.ans3_2;
+            h_3 += '<br>';
+            h_3 += msg_3.ans3_3;
+            h_3 += '</p>'
+            $('#opo').append(h_3);  
+
+        });
+
+        onChildAdded(dbRef_4,function(data){
+        const msg_4 = data.val();
+        const key = data.key;
+        let h_4 ='<p>';
+            h_4 += msg_4.ans4_1;
+            h_4 +='<br>';
+            h_4 += msg_4.ans4_2;
+            h_4 += '<br>';
+            h_4 += msg_4.ans4_3;
+            h_4 += '</p>'
+            $('#threat').append(h_4);  
+
+        });
+// for (let i =1; i<=4; i++){
+//     fetchData(i);
+// }
+});
+
+
+    //  onChildAdded(dbRef,function(data){ 
+    //   const msg = data.val();
+    // const key = data.key; //ユニークキー
+    // let h = '<p>';
+    //     h += msg.uname;
+    //     h +='<br>';
+    //     h += msg.text;
+    //     h += '</p>';
+    //     $('#output').append(h);
+    
+    //     $('#uname').val("");
+    //     $('#text').val("");
+    // });
+
+    // const auth =getAuth(app);
+
+    // let EmailInp = document.getElementById('emailInp');
+    // let PassInp = document.getElementById('passwordInp');
+    // let FnameInp = document.getElementById('fnameInp');
+    // let LnameInp = document.getElementById('lnameInp');
+    // let MainForm = document.getElementById('MainForm');
+
+    // let RegisterUser = evt => {
+    //     evt.preventDefault();
+
+    //     createUserWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
+    //     .then((credentials)=>{
+    //         console.log(credentials);
+
+    //     })
+    //     .catch((error)=>{
+    //        alert(error.message);
+    //        console.log(error.code);
+    //        console.log(error.message);
+    //     })
+    // }
+
+    // MainForm.addEventListener('submit',RegisterUser);
+
+// //以下ログイン　イベント　未完成　
+
+//     register.addEventListener('click',function(e){
+//         var mailAddress = document.getElementById('mailAddress').value;
+//   var password = document.getElementById('password').value;
+  
+//   firebase.auth().createUserWithEmailAndPassword(mailAddress, password)
+//   .catch(function(error) {
+//     alert('登録できません（' + error.message + '）');
+//   });
+// });
+
+
+// //ログイン処理
+// login.addEventListener('click', function(e) {
+//   var mailAddress = document.getElementById('mailAddress').value;
+//   var password = document.getElementById('password').value;
+  
+//   firebase.auth().signInWithEmailAndPassword(mailAddress, password)
+//   .catch(function(error) {
+//     alert('ログインできません（' + error.message + '）');
+//   });
+// });
+
+// //認証状態の確認
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if(user) {
+//     //ログイン状態
+//     alert("ログインに成功しました");
+//   }else{
+//     //ログアウト状態
+//   }
+// }); -->
+
+// function fetchData(ansNumber){
+//         const dbRef=ref(db, "ans" + ansNumber);
+
+//         onValue(dbRef,(snapshot)=>{
+//             const data = snapshot.val();
+
+//             if (data){
+//                 $("#ans_" + ansNumber + "_1").val(data.answer_1);
+//                 $("#ans_" + ansNumber + "_2").val(data.answer_2);
+//                 $("#ans_" + ansNumber + "_3").val(data.answer_3);
+//             }
+//         });
+//     }
+       
+
+
+
+    //    $("#result").on("click",function () {  
+
+    
+    //     for (let i =1; i<=4; i++){
+    //         fetchData(i);
+    //     }
+    // });
+
+
+
+
+
+</script>
+   <!-- <script>
+     $("#result").on("click",function(){
+        window.location.href='result.html';
+    });
+
+
+
+  </script> -->
+</body>
+</html>

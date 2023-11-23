@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="register.css">
+
+
+<title>新規登録</title>
+<!-- <script src="login.js"></script> -->
+
+</head>
+<body>
+ 
+
+<form id="MainForm" class="w-25 m-4">
+ <h2 class="mb-3">Register User</h2>
+ <div id="minort"> Mi nort</div>
+ <div id="comment">未来を創る一歩を</div>
+ <div id="comment2">Make the Future and Independence activity</div>
+ <div id="adress" class="form-floating mb-3">
+    <label for="input" class="aaa">mail:</label>
+    <input type="email" name="input" class="input" id="emailInp" placeholder="name@example.com">
+   
+    </div>
+<div id="pass" class="form-floating mb-3">
+    <label for="input" class="bbb">pass:</label>
+    <input type="password" name="input" class="input" id="passwordInp" placeholder="Password">
+    
+</div>
+<div id="Fname" class="form-floating mb-3">
+    <label for="input" class="ccc">Ftname:</label>
+    <input type="text" name="input" class="input" id="fnameInp" placeholder="First Name">
+    
+</div>
+<div id="Lname" class="form-floating mb-3">
+    <label for="input" class="ddd">Ltname:</label>
+    <input type="text" name="input" class="input" id="lnameInp" placeholder="Last Name">
+   
+</div>
+
+<button id="create" type ="submit" class="btn btn-primary">Create New User</button>
+<!-- <a href="login.html"><button type ="submit" class="btn btn-primary">LogIn page</button></a> -->
+
+</form>
+
+<p id="tologin" style="cursor: pointer; color: rgb(92, 92, 198); text-decoration: underline;">アカウントをお持ちの方はこちら</p>
+
+
+
+<script>
+    function redirectToLoginPage(){
+    window.location.href="login.html";  
+} 
+    document.getElementById('tologin').addEventListener('click', redirectToLoginPage);
+
+</script>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- JQuery -->
+<!-- <script type="text/javascript" src="apikey.js"></script> -->
+
+<!--** 以下Firebase **-->
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp, } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved } 
+    from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";  
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,signOut } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+   
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "",
+      authDomain: "kadai-e42aa.firebaseapp.com",
+      projectId: "kadai-e42aa",
+      storageBucket: "kadai-e42aa.appspot.com",
+      messagingSenderId: "557897220147",
+      appId: "1:557897220147:web:02aed362143e05fa44a346"
+      
+    };
+    // const WEATHER_API_KEY = config.apikey;
+    // console.log(WEATHER_API_KEY) // ← ブラウザで確認できる。
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const dbRef = ref(db,"chat");
+
+    // $("#send").on("click",function(){
+    //     const msg = {
+    //         uname : $("#uname").val(), 
+    //         text : $("#text").val()
+    //     }
+    //     const newPostRef = push(dbRef); //ユニークキー生成
+    //     set(newPostRef,msg);
+    // });
+
+    // onChildAdded(dbRef,function(data){
+    // const msg = data.val();
+    // const key = data.key; //ユニークキー
+    // let h = '<p>';
+    //     h += msg.uname;
+    //     h +='<br>';
+    //     h += msg.text;
+    //     h += '</p>';
+    //     $('#output').append(h);
+    
+    //     $('#uname').val("");
+    //     $('#text').val("");
+    // });
+
+    const auth =getAuth(app);
+
+    let EmailInp = document.getElementById('emailInp');
+    let PassInp = document.getElementById('passwordInp');
+    let FnameInp = document.getElementById('fnameInp');
+    let LnameInp = document.getElementById('lnameInp');
+    let MainForm = document.getElementById('MainForm');
+
+    let RegisterUser = evt => {
+        evt.preventDefault();
+
+        createUserWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
+        .then((credentials)=>{
+            console.log(credentials);
+
+        })
+        .catch((error)=>{
+           alert(error.message);
+           console.log(error.code);
+           console.log(error.message);
+        })
+    }
+
+    MainForm.addEventListener('submit',RegisterUser);
+
+
+
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

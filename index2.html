@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index2.css">
+    <!-- <link rel="stylesheet" href="reset.css"> -->
+    
+    <title>TopPage</title>
+</head>
+
+    
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <main>
+        <div id="aaa">
+        <p id="bbb">Mi Note</p>
+
+
+        <button id="login">Log In</button>
+        <button id="register">アカウント登録</button>
+
+    </div>
+    </main>
+    <script>
+        document.getElementById('login').addEventListener('click', function () {
+        // ログインページへ遷移
+        window.location.href = 'login.html'; // ここに遷移先のログインページのURLを指定
+    });
+
+    // アカウント登録ボタンがクリックされたときの処理
+    document.getElementById('register').addEventListener('click', function () {
+        // アカウント登録ページへ遷移
+        window.location.href = 'register.html'; // ここに遷移先のアカウント登録ページのURLを指定
+    });
+    
+    </script>
+</body>
+</html>
